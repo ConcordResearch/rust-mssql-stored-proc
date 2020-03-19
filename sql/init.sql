@@ -1,0 +1,3 @@
+DROP DATABASE [SprocTest]
+CREATE DATABASE [SprocTest];
+GO

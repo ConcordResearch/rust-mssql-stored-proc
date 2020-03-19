@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+
+  sql:
+    build: .
+
+  mssql:
+    build:
+      context: .
+      dockerfile: ./sql/Dockerfile
+    command: "bash -c ' chmod +x ./start.sh; ./start.sh & /opt/mssql/bin/sqlservr;'"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Str0ngPassW0rd!
+      - MSSQL_PID=Developer
