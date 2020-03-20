@@ -20,9 +20,21 @@ RUN cargo build --release
 
 # ==================================================
 
-FROM debian:stretch-20190910 as service
+# FROM debian:stretch-20190910 as service
+# https://github.com/dotnet/SqlClient/issues/222
+# FROM ubuntu:bionic-20200219
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-bionic
 
 WORKDIR /app
+
+RUN apt-get update &&\
+    apt-get install -y openssl --no-install-recommends &&\
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
+RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /etc/ssl/openssl.cnf
+RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /usr/lib/ssl/openssl.cnf
+RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /usr/lib/ssl/openssl.cnf
 
 COPY --from=build /build/target/release/rust-mssql-stored-proc /app
 

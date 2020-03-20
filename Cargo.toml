@@ -7,6 +7,10 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-r2d2 = "0.8.8"
-r2d2_odbc = "0.5.0"
-odbc = "0.16.1"
+# r2d2 = "0.8.8"
+# r2d2_odbc = "0.5.0"
+# odbc = "0.16.1"
+futures = "0.1.25"
+tiberius = "0.3.2"
+futures-state-stream = "0.1.1"
+tokio = "0.1.2"
